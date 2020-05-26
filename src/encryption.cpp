@@ -1,17 +1,17 @@
 /**
-*	encryption.cpp - Модуль отвечающий за работу с
-*	элементами шифрации и идетификации в сети TGN.
+* encryption.cpp - The module responsible for working with
+* elements of encryption and authentication in the TGN network.
 *
 *	@mrrva - 2019
 */
 #include "include/encryption.hpp"
 /**
-*	Используемые пространства имен и объекты.
+* Used namespaces and objects.
 */
 using namespace std;
 /**
-*	tgnencryption::new_keys - Генерация пары ключей
-*	шифрации.
+* tgnencryption :: new_keys - Generate a key pair
+* encryption.
 */
 void tgnencryption::new_keys(void)
 {
@@ -24,11 +24,11 @@ void tgnencryption::new_keys(void)
 	crypto_box_keypair(public_key, secret_key);
 }
 /**
-*	tgnencryption::pack - Шифрация байтового массива
-*	для пересылки пользователю.
+* tgnencryption :: pack - Byte array encryption
+* for sending to the user.
 *
-*	@text - Указатель на байтовый массив.
-*	@key - Публичный ключ пользователя.
+* @text - Pointer to a byte array.
+* @key - The public key of the user.
 */
 unsigned char *tgnencryption::pack(unsigned char *text,
 	unsigned char *key)
@@ -42,17 +42,17 @@ unsigned char *tgnencryption::pack(unsigned char *text,
 	}
 
 	len = TEXTSIZE + 100 + crypto_box_SEALBYTES;
-	buffer = new unsigned char[len];
+	buffer = new  unsigned  char [len];
 	memset(buffer, 0x00, len);
 
 	crypto_box_seal(buffer, text, TEXTSIZE, key);
 	return buffer;
 }
 /**
-*	tgnencryption::unpack - Дешифрация байтового массива
-*	для дальнейшей обработки.
+* tgnencryption :: unpack - Decrypt a byte array
+* for further processing.
 *
-*	@text - Указатель на байтовый массив.
+* @text - Pointer to a byte array.
 */
 unsigned char *tgnencryption::unpack(unsigned char *text)
 {
@@ -68,7 +68,7 @@ unsigned char *tgnencryption::unpack(unsigned char *text)
 	}
 
 	len = TEXTSIZE + crypto_box_SEALBYTES;
-	buffer = new unsigned char[len];
+	buffer = new  unsigned  char [len];
 	memset(buffer, 0x00, len);
 
 	if (crypto_box_seal_open(buffer, text, len
